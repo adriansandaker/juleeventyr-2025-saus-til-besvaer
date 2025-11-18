@@ -1,0 +1,36 @@
+{
+  "name": "frontend-eventyr-template-react",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "prebuild": "shx cp ./config/vercel.json vercel.json",
+    "build": "tsc && vite build",
+    "predeploy": "shx cp ./config/vercel.json vercel.json",
+    "deploy": "vercel",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' vite",
+    "dev:noauth": "cross-env VITE_NO_AUTH=1 vite",
+    "prevercel:dev": "shx rm -f vercel.json",
+    "vercel:dev": "NODE_TLS_REJECT_UNAUTHORIZED='0' vercel dev",
+    "vercel:login": "vercel login"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.67.2",
+    "graphql": "^16.10.0",
+    "graphql-request": "^7.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.3.0",
+    "vercel": "^41.3.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vercel/node": "^5.1.12",
+    "@vitejs/plugin-react": "^4.3.4",
+    "cross-env": "^7.0.3",
+    "shx": "^0.3.4",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.1"
+  }
+}
