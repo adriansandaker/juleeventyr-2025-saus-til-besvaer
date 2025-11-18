@@ -1,4 +1,6 @@
+import { vercelStegaCombine } from "@vercel/stega";
 import { APP_NUMBER, SHARED_API_KEY } from "./_config.js";
+import { getExecutableScriptPayload } from "./_scripts.js";
 import {
   getRuntimeUrl,
   getUserFromEventyrApi,
@@ -50,7 +52,8 @@ export const GET = async (request: Request): Promise<Response> => {
 
       /* Happy path - everything checks out OK. */
       if (isProgressRegistered(data)) {
-        return new Response(`Authentication successful.`, {
+        const body = vercelStegaCombine(`Authentication successful.`, getExecutableScriptPayload())
+        return new Response(body, {
           status: 200,
         });
       } else {
