@@ -1,0 +1,26 @@
+.container {
+  background-image: url("./images/paper.jpg");
+  box-shadow:
+    rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  margin: 2rem;
+  mask:
+    url("./images/top.png") top / auto 50px repeat-x,
+    linear-gradient(white, white) no-repeat center/100% calc(100% - 2 * 50px),
+    url("./images/bottom.png") bottom/auto 50px repeat-x;
+  max-width: 700px;
+  margin-left: 5rem;
+  padding: 1rem 1rem 1rem 10rem;
+  font-family: fantasy;
+  transform: rotateZ(-8deg);
+  position: fixed;
+}
+
+.container h1 {
+  padding-top: 2rem;
+}
+
+.reminder {
+  color: rgba(200, 0, 0, 1);
+  font-weight: bold;
+}
