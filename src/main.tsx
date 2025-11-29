@@ -1,5 +1,3 @@
-import "./lib/metallicss/dist/metallicss.min.js";
-
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

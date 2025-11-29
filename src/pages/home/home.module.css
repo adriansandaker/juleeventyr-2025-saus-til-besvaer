@@ -14,3 +14,23 @@
   bottom: 6rem;
   right: 4rem;
 }
+
+.flour {
+  background-image: url("./images/mel.webp");
+  background-size: contain;
+  height: 500px;
+  width: 500px;
+  position: absolute;
+  top: 6rem;
+  right: 4rem;
+}
+
+.butter {
+  background-image: url("./images/smor.webp");
+  background-size: contain;
+  height: 273px;
+  width: 384px;
+  position: absolute;
+  top: 50%;
+  right: 30%;
+}

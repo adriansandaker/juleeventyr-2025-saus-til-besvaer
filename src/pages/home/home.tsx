@@ -8,6 +8,8 @@ const Home: React.FC = () => {
       <section className={styles.table}>
         <Oppskrift />
         <div className={styles.coffee} />
+        <div className={styles.flour} />
+        <div className={styles.butter} />
         <Saus />
       </section>
     </main>
