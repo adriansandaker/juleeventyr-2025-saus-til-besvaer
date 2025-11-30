@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.kokeplate {
+  border: 4px dashed #efefef;
+  border-radius: 50rem;
+  height: 200px;
+  width: 200px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.controls button {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  flex-grow: 1;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+}
+
+.indicator {
+  background: #222;
+  border-radius: 0.5rem;
+  color: #ee3333;
+  font-style: monospace;
+  display: grid;
+  place-content: center;
+  height: 2rem;
+  margin: 0.5rem 0;
+  width: 2rem;
+}

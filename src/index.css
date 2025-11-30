@@ -27,4 +27,8 @@ code {
   h3 {
     display: block;
   }
+
+  #butter, #flour, #radio {
+    display: none;
+  }
 }

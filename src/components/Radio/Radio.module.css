@@ -1,0 +1,73 @@
+.container {
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  background: linear-gradient(
+    41deg,
+    rgba(46, 54, 56, 1) 0%,
+    rgba(98, 102, 99, 1) 73%,
+    rgba(18, 18, 16, 1) 100%
+  );
+  padding: 2rem 1rem;
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-direction: row;
+  border-radius: 8px;
+}
+
+.logo {
+  background: linear-gradient(
+    245deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(136, 136, 136, 1) 50%,
+    rgba(245, 245, 245, 1) 100%
+  );
+  color: black;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.container button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.logo p {
+  margin: 0;
+}
+
+.display {
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  overflow: hidden;
+  background-color: lightblue;
+  padding: 4px;
+  width: 100px;
+}
+
+.scrollingText {
+  animation: infiniteHorizontalScroll 20s linear infinite;
+  white-space: nowrap;
+  font-family: monospace;
+}
+
+.scrollingText p {
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes infiniteHorizontalScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
