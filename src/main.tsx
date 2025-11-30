@@ -6,15 +6,18 @@ import App from "./App";
 import AuthenticationGuard from "./AuthenticationGuard";
 
 import "./index.css";
+import PlatetoppProvider from "./context/PlatetoppProvider";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <AuthenticationGuard>
-        <App />
+        <PlatetoppProvider>
+          <App />
+        </PlatetoppProvider>
       </AuthenticationGuard>
     </QueryClientProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

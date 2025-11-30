@@ -1,15 +1,22 @@
 import { useState } from "react";
 import styles from "./Kokeplate.module.css";
+import { usePlatetopp } from "@/context/PlatetoppProvider";
 
-const Kokeplate = () => {
-  const [setting, setSetting] = useState(0);
+const Kokeplate = ({
+  id,
+  currentSetting,
+}: {
+  id: string;
+  currentSetting: number;
+}) => {
+  const { currentInnstilling, decrement, increment } = usePlatetopp();
 
   function handleIncrease() {
-    setSetting((prev) => Math.min(prev + 1, 10));
+    increment();
   }
 
   function handleDecrease() {
-    setSetting((prev) => Math.max(prev - 1, 0));
+    decrement();
   }
 
   return (
@@ -17,9 +24,7 @@ const Kokeplate = () => {
       <div className={styles.kokeplate}></div>
       <div className={styles.controls}>
         <button onClick={handleDecrease}>-</button>
-        <div className={styles.indicator}>
-          {setting}
-        </div>
+        <div className={styles.indicator}>{currentInnstilling}</div>
         <button onClick={handleIncrease}>+</button>
       </div>
     </div>
