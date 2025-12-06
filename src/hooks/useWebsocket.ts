@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback, useContext } from "react";
 import { useUsername } from "./useUsername";
-import { isReportMessage, isUserData } from "@/context/types";
-import { useInterval } from "./useInterval";
+import { isReportMessage } from "@/context/types";
 import { usePlatetopp } from "@/context/PlatetoppProvider";
 import { useUniqueId } from "./useId";
+
+const SOCKET_URL = "http://localhost:3030/";
 
 export const useWebSocket = () => {
   const userId = useUniqueId();
@@ -11,53 +12,24 @@ export const useWebSocket = () => {
   const [isReady, setIsReady] = useState(false);
 
   const { username: team } = useUsername();
-
-  const {
-    currentInnstilling,
-    updateUsers,
-    decrement,
-    updateCurrentInstilling,
-  } = usePlatetopp();
+  const { users, updateUsers } = usePlatetopp();
 
   // Use a ref to hold the actual WebSocket instance
   // This ensures we can access it without triggering re-renders
-  const ws = useRef<WebSocket>(null);
+  const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const socket = new WebSocket("http://localhost:3030/");
+    const socket = new WebSocket(SOCKET_URL);
 
-    // Connection opened
     socket.onopen = () => {
       setIsReady(true);
     };
 
-    // Listen for messages
-    socket.onmessage = (event) => {
-      const message = event.data;
+    socket.onmessage = (event) => handleMessage(event);
 
-      try {
-        const parsed = JSON.parse(message);
-        if (isReportMessage(parsed)) {
-          updateUsers(parsed.users);
-
-          if (parsed.type === "STOVE_GUARD_ADJUSTMENT") {
-            updateCurrentInstilling(
-              parsed.users.find((u) => u.userId === userId)
-                ?.currentInnstilling ?? 0
-            );
-            decrement();
-          }
-        }
-      } catch {
-        console.log("Error handling it");
-        /* Handle? */
-      }
-    };
-
-    // Connection closed - optional: Implement reconnect logic here
     socket.onclose = () => {
       setIsReady(false);
-      console.log("WebSocket Disconnected");
+      updateUsers(users.filter((u) => u.userId !== userId));
     };
 
     socket.onerror = (event) => {
@@ -74,23 +46,74 @@ export const useWebSocket = () => {
     };
   }, []);
 
+  const handleMessage = useCallback(
+    (event: MessageEvent) => {
+      const message = event.data;
+      if (message.type === "TEMP_ACK") {
+        console.log("Got ack");
+      }
+      try {
+        const parsed = JSON.parse(message);
+        if (isReportMessage(parsed)) {
+          updateUsers(parsed.users);
+        }
+      } catch {
+        console.log("Error handling it");
+        /* Handle? */
+      }
+    },
+    [updateUsers]
+  );
+
   useEffect(() => {
-    console.log("Incrementing");
     if (isReady && ws.current?.readyState === 1) {
+      ws.current?.send(
+        JSON.stringify({
+          type: "JOIN",
+          team,
+          data: {
+            userId,
+          },
+        })
+      );
+    }
+  }, [isReady]);
+
+  function getUserById(userId: string) {
+    return users.find((user) => user.userId === userId);
+  }
+
+  const decrement = () => {
+    const user = getUserById(userId);
+    if (user && ws.current?.readyState === 1) {
       ws.current?.send(
         JSON.stringify({
           type: "TEMP_REPORT",
           team,
           data: {
             userId,
-            currentInnstilling: currentInnstilling ?? 0,
+            currentInnstilling: user.currentInnstilling - 1,
           },
         })
       );
-    } else {
-      console.log("Ready state was " + ws.current?.readyState);
     }
-  }, [currentInnstilling, isReady]);
+  };
 
-  return { isReady };
+  const increment = () => {
+    const user = getUserById(userId);
+    if (user && ws.current?.readyState === 1) {
+      ws.current?.send(
+        JSON.stringify({
+          type: "TEMP_REPORT",
+          team,
+          data: {
+            userId,
+            currentInnstilling: user.currentInnstilling + 1,
+          },
+        })
+      );
+    }
+  };
+
+  return { isReady, userId, increment, decrement };
 };

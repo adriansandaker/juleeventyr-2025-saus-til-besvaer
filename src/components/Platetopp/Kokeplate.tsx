@@ -4,13 +4,18 @@ import { usePlatetopp } from "@/context/PlatetoppProvider";
 
 const Kokeplate = ({
   id,
-  currentSetting,
+  increment,
+  decrement,
+  currentInnstilling,
+  disableInteraction,
 }: {
   id: string;
   currentSetting: number;
+  increment: () => void;
+  decrement: () => void;
+  currentInnstilling: number;
+  disableInteraction: boolean;
 }) => {
-  const { currentInnstilling, decrement, increment } = usePlatetopp();
-
   function handleIncrease() {
     increment();
   }
@@ -23,9 +28,13 @@ const Kokeplate = ({
     <div className={styles.container}>
       <div className={styles.kokeplate}></div>
       <div className={styles.controls}>
-        <button onClick={handleDecrease}>-</button>
+        <button disabled={disableInteraction} onClick={handleDecrease}>
+          -
+        </button>
         <div className={styles.indicator}>{currentInnstilling}</div>
-        <button onClick={handleIncrease}>+</button>
+        <button disabled={disableInteraction} onClick={handleIncrease}>
+          +
+        </button>
       </div>
     </div>
   );

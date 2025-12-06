@@ -4,7 +4,7 @@ import styles from "./Platetopp.module.css";
 import { usePlatetopp } from "@/context/PlatetoppProvider";
 
 const Platetopp = () => {
-  useWebSocket();
+  const { userId, increment, decrement } = useWebSocket();
 
   const { users } = usePlatetopp();
 
@@ -13,11 +13,17 @@ const Platetopp = () => {
       {users.map((user) => {
         console.log(user);
         return (
-          <Kokeplate
+          <div>
+            <Kokeplate
+            disableInteraction={user.userId !== userId}
             id={user.userId}
             key={user.userId}
             currentSetting={user.currentInnstilling}
+            increment={() => increment()}
+            decrement={() => decrement()}
+            currentInnstilling={user.currentInnstilling}
           />
+          </div>
         );
       })}
     </div>
